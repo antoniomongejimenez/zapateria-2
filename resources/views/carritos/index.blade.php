@@ -30,7 +30,7 @@
                                         <td class="px-6 py-2">{{ $carrito->zapato->precio * $carrito->cantidad}}</td>
                                         <td>
                                             <div class="text-sm text-gray-900 ">
-                                                <form action="{{ route('restar', $carrito->zapato) }}" method="POST">
+                                                <form action="{{ route('restar', $carrito) }}" method="POST">
                                                     @csrf
                                                     @method('POST')
                                                     <button type="submit" class="px-4 py-1 text-sm text-white bg-red-400 rounded">-</button>
@@ -39,7 +39,7 @@
                                         </td>
                                         <td>
                                             <div class="text-sm text-gray-900 ">
-                                                <form action="{{ route('sumar', $carrito->zapato) }}" method="POST">
+                                                <form action="{{ route('sumar', $carrito) }}" method="POST">
                                                     @csrf
                                                     @method('POST')
                                                     <button type="submit" class="px-4 py-1 text-sm text-white bg-red-400 rounded">+</button>
@@ -50,6 +50,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-5">
+                            <form action="{{route('vaciar')}}" method="post">
+                                @csrf
+                                @method('POST')
+                                <button class="bg-red-500 text-black px-7 py-2" type="submit"> Vaciar carrito</button>
+                            </form>
+                        </div>
                     </x-plantilla>
                 </div>
             </div>

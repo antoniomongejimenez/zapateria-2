@@ -32,11 +32,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/carritos/meter/{zapato}', [CarritoController::class, 'anadiralcarrito'])
         ->name('anadiralcarrito');
 
-    Route::post('/carritos/restar/{zapato}', [CarritoController::class, 'restar'])
+    Route::post('/carritos/restar/{carrito}', [CarritoController::class, 'restar'])
         ->name('restar');
 
-    Route::post('/carritos/sumar/{zapato}', [CarritoController::class, 'sumar'])
+    Route::post('/carritos/sumar/{carrito}', [CarritoController::class, 'sumar'])
         ->name('sumar');
+
+    Route::post('/carritos/vaciar', [CarritoController::class, 'vaciar'])
+        ->name('vaciar');
 });
 
 require __DIR__.'/auth.php';

@@ -90,11 +90,11 @@ class CarritoController extends Controller
         //
     }
 
-    public function anadiralcarrito(Carrito $carrito, Zapato $zapato)
+    public function anadiralcarrito(Zapato $zapato)
     {
-        $carrito = Carrito::where('zapato_id', $zapato->id)->where('user_id', auth()->user()->id)->get();
+        $carrito = Carrito::where('zapato_id', $zapato->id)->where('user_id', auth()->user()->id)->first();
 
-        if ($carrito->isEmpty()) {
+        if (empty($carrito)) {
 
             $carrito = new Carrito();
 
@@ -107,15 +107,14 @@ class CarritoController extends Controller
             return redirect()->route('zapatos.index')->with('success', 'Zapato añadido al carrito.');
         }
 
-        $carrito[0]->cantidad += 1;
-        $carrito[0]->save();
+        $carrito->cantidad += 1;
+        $carrito->save();
 
         return redirect()->route('zapatos.index')->with('success', 'Zapato anadido al carrito.');
     }
 
-    public function restar(Zapato $zapato)
+    public function restar(Carrito $carrito)
     {
-        $carrito = Carrito::where('zapato_id', $zapato->id)->where('user_id', auth()->user()->id)->first();
 
         if ($carrito->cantidad === 1) {
             $carrito->delete();
@@ -130,20 +129,19 @@ class CarritoController extends Controller
         return redirect()->route('carritos.index')->with('success', 'Zapato restado al carrito.');
     }
 
-    public function sumar(Zapato $zapato)
+    public function sumar(Carrito $carrito)
     {
-        $carrito = Carrito::where('zapato_id', $zapato->id)->where('user_id', auth()->user()->id)->first();
-
-        if ($carrito->cantidad === 1) {
-            $carrito->delete();
-
-
-            return redirect()->route('carritos.index')->with('success', 'Zapato borrado del carrito.');
-        }
-
         $carrito->cantidad += 1;
         $carrito->save();
 
         return redirect()->route('carritos.index')->with('success', 'Zapato sumado al carrito.');
+    }
+
+    public function vaciar()
+    {
+        $carrito = Carrito::where('user_id', auth()->user()->id);
+        $carrito->delete();
+
+        return redirect()->route('carritos.index')->with('success', 'Carrito vaciado con exito.');
     }
 }
