@@ -57,6 +57,13 @@
                                 <button class="bg-red-500 text-black px-7 py-2" type="submit"> Vaciar carrito</button>
                             </form>
                         </div>
+                        <div class="mt-5">
+                            <form action="{{route('pedido')}}" method="post">
+                                @csrf
+                                @method('POST')
+                                <button class="bg-green-500 text-black px-7 py-2" type="submit"> Realizar pedido</button>
+                            </form>
+                        </div>
                     </x-plantilla>
                 </div>
             </div>

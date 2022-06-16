@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/carritos/vaciar', [CarritoController::class, 'vaciar'])
         ->name('vaciar');
+
+    Route::post('/carritos/factura', [CarritoController::class, 'pedido'])
+        ->name('pedido');
 });
 
 require __DIR__.'/auth.php';
